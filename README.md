@@ -1,11 +1,11 @@
-# Lumberjack
+# Huggare
 
-Whatever.
+**Huggare** is a Swedish word for woodcutter. Whatever.
 
 # Usage
 
 ```javascript
-var Log = require('lumberjack');
+var Log = require('huggare');
 
 var TAG = "MyCrapModule";
 
