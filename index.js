@@ -12,14 +12,15 @@ function createLog() {
       this.formatters.push(fmt);
     },
 
-    println: function(priority, tag, msg) {
+    println: function(priority, tag, msg, tr) {
       if (priority < this.level) {
         return;
       }
 
+      var ts = new Date;
       var len = Log.formatters.length;
       for (var i = 0; i < len; ++i) {
-        this.formatters[i].apply(Log, arguments);
+        this.formatters[i].call(this, ts, priority, tag, msg, tr);
       }
     }
   };
@@ -47,23 +48,19 @@ function createLog() {
 
 var Log = createLog();
 
-var ConsoleFormatter = function(prio, tag, msg, tr) {
+var ConsoleFormatter = function(ts, prio, tag, msg, tr) {
   var p = [,,'V','D','I','W','E','A'];
 
-  var n = new Date;
-
-  if (arguments.length === 3) {
-    if (msg.stack) {
-      tr = msg;
-      msg = '';
-    }
+  if (msg.stack) {
+    tr = msg;
+    msg = '';
   }
 
   switch (prio) {
     case Log.VERBOSE:
     case Log.DEBUG:
     case Log.INFO:
-      console.log(n.toISOString() + " [" + p[prio] + "] " + tag + ": " + msg);
+      console.log(ts.toISOString() + " [" + p[prio] + "] " + tag + ": " + msg);
       if (tr) {
         console.log(tr.stack);
       }
@@ -71,7 +68,7 @@ var ConsoleFormatter = function(prio, tag, msg, tr) {
     case Log.WARN:
     case Log.ERROR:
     case Log.ASSERT:
-      console.error(n.toISOString() + " [" + p[prio] + "] " + tag + ": " + msg);
+      console.error(ts.toISOString() + " [" + p[prio] + "] " + tag + ": " + msg);
       if (tr) {
         console.error(tr.stack);
       }
