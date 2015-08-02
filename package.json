@@ -7,5 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brendan Molloy <brendan@bbqsrc.net>",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": "bbqsrc/huggare"
 }
