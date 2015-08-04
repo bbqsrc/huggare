@@ -10,6 +10,7 @@
   "license": "ISC",
   "repository": "bbqsrc/huggare",
   "devDependencies": {
-    "eslint": "^1.0.0"
+    "eslint": "^1.0.0",
+    "mocha": "^2.2.5"
   }
 }

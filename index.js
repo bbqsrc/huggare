@@ -32,6 +32,7 @@ function parseArgs(args) {
 function createLog() {
   var Log = {
     transports: [],
+    filters: [],
 
     setLevel: function(prio) {
       this.level = prio;
@@ -41,8 +42,12 @@ function createLog() {
       this.transports.push(fmt);
     },
 
+    addFilter: function(tag) {
+      this.filters.push(tag);
+    },
+
     println: function(priority, tag /*, varargs */) {
-      if (priority < this.level) {
+      if (priority < this.level || this.filters.indexOf(tag) > -1) {
         return;
       }
 
