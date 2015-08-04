@@ -6,22 +6,26 @@ function parseArgs(args) {
   var o = {};
 
   var len = args.length;
+  var err;
   if (len > 0) {
     if (args[args.length-1] && args[args.length-1].stack) {
-      o.err = args.pop();
+      err = args.pop();
       len--;
     }
   }
 
   if (len === 1 && util.isObject(args[0])) {
     // JSONable
-    o.data = args[0];
+    o = args[0];
   } else if (len >= 1) {
     o.message = args.map(function(arg) {
       return util.isPrimitive(arg) ? arg : util.inspect(arg);
     }).join(' ');
   }
 
+  if (err) {
+    o.err = err;
+  }
   return o;
 }
 
