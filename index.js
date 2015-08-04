@@ -31,14 +31,14 @@ function parseArgs(args) {
 
 function createLog() {
   var Log = {
-    formatters: [],
+    transports: [],
 
     setLevel: function(prio) {
       this.level = prio;
     },
 
-    addFormatter: function(fmt) {
-      this.formatters.push(fmt);
+    addTransport: function(fmt) {
+      this.transports.push(fmt);
     },
 
     println: function(priority, tag /*, varargs */) {
@@ -50,9 +50,9 @@ function createLog() {
       args = parseArgs(args);
 
       var ts = new Date;
-      var len = Log.formatters.length;
+      var len = Log.transports.length;
       for (var i = 0; i < len; ++i) {
-        this.formatters[i].call(this, ts, priority, tag, args);
+        this.transports[i].call(this, ts, priority, tag, args);
       }
     }
   };
@@ -80,7 +80,7 @@ function createLog() {
 
 var Log = createLog();
 
-var ConsoleFormatter = function(ts, prio, tag, args) {
+var ConsoleTransport = function(ts, prio, tag, args) {
   /*eslint-disable no-console */
   var p = [undefined,undefined,'V','D','I','W','E','A'];
 
@@ -106,11 +106,11 @@ var ConsoleFormatter = function(ts, prio, tag, args) {
       }
       break;
     default:
-      Log.wtf('ConsoleFormatter', 'invalid priority specified: ', prio, ', logging as error.');
+      Log.wtf('ConsoleTransport', 'invalid priority specified: ', prio, ', logging as error.');
       Log.e(tag, args);
   }
 };
 
-Log.addFormatter(ConsoleFormatter);
+Log.addTransport(ConsoleTransport);
 
 module.exports = Log;
