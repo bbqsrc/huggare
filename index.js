@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function createLog() {
   var Log = {
@@ -49,7 +49,8 @@ function createLog() {
 var Log = createLog();
 
 var ConsoleFormatter = function(ts, prio, tag, msg, tr) {
-  var p = [,,'V','D','I','W','E','A'];
+  /*eslint-disable no-console */
+  var p = [undefined,undefined,'V','D','I','W','E','A'];
 
   if (msg.stack) {
     tr = msg;
@@ -60,7 +61,7 @@ var ConsoleFormatter = function(ts, prio, tag, msg, tr) {
     case Log.VERBOSE:
     case Log.DEBUG:
     case Log.INFO:
-      console.log(ts.toISOString() + " [" + p[prio] + "] " + tag + ": " + msg);
+      console.log(ts.toISOString() + ' [' + p[prio] + '] ' + tag + ': ' + msg);
       if (tr) {
         console.log(tr.stack);
       }
@@ -68,13 +69,13 @@ var ConsoleFormatter = function(ts, prio, tag, msg, tr) {
     case Log.WARN:
     case Log.ERROR:
     case Log.ASSERT:
-      console.error(ts.toISOString() + " [" + p[prio] + "] " + tag + ": " + msg);
+      console.error(ts.toISOString() + ' [' + p[prio] + '] ' + tag + ': ' + msg);
       if (tr) {
         console.error(tr.stack);
       }
       break;
     default:
-      Log.wtf("ConsoleFormatter", "invalid priority specified: " + prio + ", logging as error.");
+      Log.wtf('ConsoleFormatter', 'invalid priority specified: ' + prio + ', logging as error.');
       Log.e(tag, msg, tr);
   }
 };

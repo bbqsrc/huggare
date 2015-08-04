@@ -8,5 +8,8 @@
   },
   "author": "Brendan Molloy <brendan@bbqsrc.net>",
   "license": "ISC",
-  "repository": "bbqsrc/huggare"
+  "repository": "bbqsrc/huggare",
+  "devDependencies": {
+    "eslint": "^1.0.0"
+  }
 }
