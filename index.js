@@ -63,7 +63,11 @@ function createLog() {
     'INFO': { value: 4 },
     'WARN': { value: 5 },
     'ERROR': { value: 6 },
-    'ASSERT': { value: 7 }
+    'ASSERT': { value: 7 },
+
+    'SHORT_NAMES': {
+      value: [undefined, undefined, 'V', 'D', 'I', 'W', 'E', 'A']
+    }
   });
 
   Log.v = Log.println.bind(Log, Log.VERBOSE);
@@ -82,32 +86,30 @@ var Log = createLog();
 
 var ConsoleTransport = function(ts, prio, tag, args) {
   /*eslint-disable no-console */
-  var p = [undefined,undefined,'V','D','I','W','E','A'];
+  var m;
 
   switch (prio) {
     case Log.VERBOSE:
     case Log.DEBUG:
     case Log.INFO:
-      if (args.message) {
-        console.log(ts.toISOString() + ' [' + p[prio] + '] ' + tag + ': ' + args.message);
-      }
-      if (args.err) {
-        console.log(args.err.stack);
-      }
+      m = 'log';
       break;
     case Log.WARN:
     case Log.ERROR:
     case Log.ASSERT:
-      if (args.message) {
-        console.error(ts.toISOString() + ' [' + p[prio] + '] ' + tag + ': ' + args.message);
-      }
-      if (args.err) {
-        console.error(args.err.stack);
-      }
+      m = 'error';
       break;
     default:
       Log.wtf('ConsoleTransport', 'invalid priority specified: ', prio, ', logging as error.');
       Log.e(tag, args);
+      return;
+  }
+
+  if (args.message) {
+    console[m](ts.toISOString() + ' [' + this.SHORT_NAMES[prio] + '] ' + tag + ': ' + args.message);
+  }
+  if (args.err) {
+    console[m](args.err.stack);
   }
 };
 
