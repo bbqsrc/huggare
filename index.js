@@ -110,9 +110,8 @@ var ConsoleTransport = function(ts, prio, tag, args) {
       return;
   }
 
-  if (args.message) {
-    console[m](ts.toISOString() + ' [' + this.SHORT_NAMES[prio] + '] ' + tag + ': ' + args.message);
-  }
+  console[m](ts.toISOString() + ' [' + this.SHORT_NAMES[prio] + '] ' + tag + ': ' + (args.message || ''));
+
   if (args.err) {
     console[m](args.err.stack);
   }
