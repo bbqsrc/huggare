@@ -44,7 +44,7 @@ function Log() {
   this.e = this.println.bind(this, Log.ERROR);
   this.wtf = this.println.bind(this, Log.ASSERT);
 
-  this.setLevel(Log.INFO);
+  this.level = Log.INFO;
 }
 
 Object.defineProperties(Log, {
@@ -78,11 +78,11 @@ Log.prototype = {
       return;
     }
 
-    var args = Array.prototype.constructor.apply(null, arguments).slice(2);
+    var args = [].slice.call(arguments, 2);
     args = parseArgs(args);
 
     var ts = new Date;
-    var len = Log.transports.length;
+    var len = this.transports.length;
     for (var i = 0; i < len; ++i) {
       this.transports[i].call(this, ts, severity, tag, args);
     }
@@ -93,6 +93,8 @@ Log.prototype = {
     this.filters = [];
 
     this.addTransport(ConsoleTransport);
+
+    return this;
   }
 };
 
@@ -112,12 +114,12 @@ function ConsoleTransport(ts, severity, tag, args) {
       m = 'error';
       break;
     default:
-      Log.wtf('ConsoleTransport', 'invalid severity specified: ', severity, ', logging as error.');
-      Log.e(tag, args);
+      this.wtf('ConsoleTransport', 'invalid severity specified: ', severity, ', logging as error.');
+      this.e(tag, args);
       return;
   }
 
-  console[m](ts.toISOString() + ' [' + this.SHORT_NAMES[severity] + '] ' + tag + ': ' + (args.message || ''));
+  console[m](ts.toISOString() + ' [' + Log.SHORT_NAMES[severity] + '] ' + tag + ': ' + (args.message || ''));
 
   if (args.err) {
     console[m](args.err.stack);
