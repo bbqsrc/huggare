@@ -1,6 +1,6 @@
 {
   "name": "huggare",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Android-style logging for an ECMAScript world.",
   "main": "index.js",
   "scripts": {
