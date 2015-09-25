@@ -76,17 +76,22 @@ Log.prototype = {
   }
 };
 
-Object.defineProperties(Log.prototype, {
-  'VERBOSE': { value: 2 },
-  'DEBUG': { value: 3 },
-  'INFO': { value: 4 },
-  'WARN': { value: 5 },
-  'ERROR': { value: 6 },
-  'ASSERT': { value: 7 },
+var constants = {
+  'VERBOSE': 2,
+  'DEBUG': 3,
+  'INFO': 4,
+  'WARN': 5,
+  'ERROR': 6,
+  'ASSERT': 7,
 
-  'SHORT_NAMES': {
-    value: [undefined, undefined, 'V', 'D', 'I', 'W', 'E', 'A']
-  }
+  'SHORT_NAMES': [undefined, undefined, 'V', 'D', 'I', 'W', 'E', 'A']
+};
+
+Object.keys(constants).forEach(function(key) {
+  Object.defineProperty(Log.prototype, key, {
+    value: constants[key],
+    enumerable: true
+  });
 });
 
 var instance = new Log;
