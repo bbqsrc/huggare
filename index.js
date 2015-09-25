@@ -73,15 +73,6 @@ Log.prototype = {
     for (var i = 0; i < len; ++i) {
       this.transports[i].call(this, ts, severity, tag, args);
     }
-  },
-
-  defaults: function() {
-    this.transports = [];
-    this.filters = [];
-
-    this.addTransport(ConsoleTransport);
-
-    return this;
   }
 };
 
@@ -100,19 +91,29 @@ Object.defineProperties(Log.prototype, {
 
 var instance = new Log;
 
+instance.defaults = function() {
+  if (this.transports.length || this.filters.length) {
+    throw new Error('Already configured.');
+  }
+
+  this.addTransport(ConsoleTransport);
+
+  return this;
+};
+
 function ConsoleTransport(ts, severity, tag, args) {
   /*eslint-disable no-console */
   var m;
 
   switch (severity) {
-    case Log.VERBOSE:
-    case Log.DEBUG:
-    case Log.INFO:
+    case this.VERBOSE:
+    case this.DEBUG:
+    case this.INFO:
       m = 'log';
       break;
-    case Log.WARN:
-    case Log.ERROR:
-    case Log.ASSERT:
+    case this.WARN:
+    case this.ERROR:
+    case this.ASSERT:
       m = 'error';
       break;
     default:
@@ -121,7 +122,7 @@ function ConsoleTransport(ts, severity, tag, args) {
       return;
   }
 
-  console[m](ts.toISOString() + ' [' + Log.SHORT_NAMES[severity] + '] ' + tag + ': ' + (args.message || ''));
+  console[m](ts.toISOString() + ' [' + this.SHORT_NAMES[severity] + '] ' + tag + ': ' + (args.message || ''));
 
   if (args.err) {
     console[m](args.err.stack);

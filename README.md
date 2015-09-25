@@ -54,8 +54,9 @@ Just look at the code for now.
 
 ## Changelog
 
-* 0.3.1: Publishing fail.
-* 0.3.0: No transports by default now. Use `Log#defaults` as provided in example for old behaviour.
+* 0.3.2: Fix misplaced constants
+* 0.3.1: Publishing fail
+* 0.3.0: No transports by default now. Use `Log#defaults` as provided in example for old behaviour
 * 0.2.0: Changed how the logger handles objects, allowing metadata
 * 0.1.0: First release
 
