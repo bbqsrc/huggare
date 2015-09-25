@@ -47,19 +47,6 @@ function Log() {
   this.level = Log.INFO;
 }
 
-Object.defineProperties(Log, {
-  'VERBOSE': { value: 2 },
-  'DEBUG': { value: 3 },
-  'INFO': { value: 4 },
-  'WARN': { value: 5 },
-  'ERROR': { value: 6 },
-  'ASSERT': { value: 7 },
-
-  'SHORT_NAMES': {
-    value: [undefined, undefined, 'V', 'D', 'I', 'W', 'E', 'A']
-  }
-});
-
 Log.prototype = {
   setLevel: function(severity) {
     this.level = severity;
@@ -98,6 +85,21 @@ Log.prototype = {
   }
 };
 
+Object.defineProperties(Log.prototype, {
+  'VERBOSE': { value: 2 },
+  'DEBUG': { value: 3 },
+  'INFO': { value: 4 },
+  'WARN': { value: 5 },
+  'ERROR': { value: 6 },
+  'ASSERT': { value: 7 },
+
+  'SHORT_NAMES': {
+    value: [undefined, undefined, 'V', 'D', 'I', 'W', 'E', 'A']
+  }
+});
+
+var instance = new Log;
+
 function ConsoleTransport(ts, severity, tag, args) {
   /*eslint-disable no-console */
   var m;
@@ -125,8 +127,6 @@ function ConsoleTransport(ts, severity, tag, args) {
     console[m](args.err.stack);
   }
 }
-
-var instance = new Log;
 
 // Oh.
 instance.Log = Log;
