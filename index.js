@@ -37,14 +37,14 @@ function Log() {
   this.transports = [];
   this.filters = [];
 
-  this.v = this.println.bind(this, Log.VERBOSE);
-  this.d = this.println.bind(this, Log.DEBUG);
-  this.i = this.println.bind(this, Log.INFO);
-  this.w = this.println.bind(this, Log.WARN);
-  this.e = this.println.bind(this, Log.ERROR);
-  this.wtf = this.println.bind(this, Log.ASSERT);
+  this.v = this.println.bind(this, this.VERBOSE);
+  this.d = this.println.bind(this, this.DEBUG);
+  this.i = this.println.bind(this, this.INFO);
+  this.w = this.println.bind(this, this.WARN);
+  this.e = this.println.bind(this, this.ERROR);
+  this.wtf = this.println.bind(this, this.ASSERT);
 
-  this.level = Log.INFO;
+  this.level = this.INFO;
 }
 
 Log.prototype = {
