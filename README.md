@@ -5,11 +5,12 @@
 # Usage
 
 ```javascript
-var Log = require('huggare').defaults();
+var huggare = require('huggare');
+var Log = require('huggare-log');
 
 var TAG = "MyCrapModule";
 
-Log.setLevel(Log.VERBOSE);
+Log.setLevel(huggare.Severities.VERBOSE);
 
 /* Some time passes, nightmares are happening... */
 
@@ -54,6 +55,7 @@ Just look at the code for now.
 
 ## Changelog
 
+* 0.4.0: **Breaking change**: use `huggare-log` for old `Log#defaults` feature.
 * 0.3.2: Fix misplaced constants
 * 0.3.1: Publishing fail
 * 0.3.0: No transports by default now. Use `Log#defaults` as provided in example for old behaviour

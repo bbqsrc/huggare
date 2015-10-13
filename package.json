@@ -1,6 +1,6 @@
 {
   "name": "huggare",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Android-style logging for an ECMAScript world.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,9 @@
   "license": "ISC",
   "repository": "bbqsrc/huggare",
   "devDependencies": {
-    "eslint": "^1.0.0",
+    "babel-eslint": "^4.1.3",
+    "eslint": "^1.6.0",
+    "eslint-plugin-babel": "^2.1.1",
     "mocha": "^2.2.5"
   }
 }
